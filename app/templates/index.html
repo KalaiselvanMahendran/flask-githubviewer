@@ -1,0 +1,35 @@
+<!-- index.html-->
+
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<div class="jumbotron">
+  	<h1>Flask Is Awesome</h1>
+  	<p class="lead">And I'm glad to be learning so much about it!</p>
+  	<!-- form -->
+  	<form id="formGitRepo">
+  		<div class="row">
+  			<div class="col-md-8">
+  				<input type="text" name="username" id="git-username" class="form-control" value="" placeholder="enter username here..">
+  			</div>
+  			<div class="col-md-4">
+  				<input type="submit" class="form-control" value="Search">
+  			</div>
+  		</div>
+  	</form>
+  	<!-- end of form -->
+</div>
+
+<h1 id="userName"></h1>
+<table class="table table-hover hidden" id="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Language</th>
+			<th>Git Url</th>
+			<th>Watchers</th>
+		</tr>
+	</thead>
+</table>
+
+{% endblock %}

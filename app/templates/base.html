@@ -1,0 +1,72 @@
+<!-- base.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <style type="text/css">
+      .hidden {
+        display: none
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation"><a href="/">Home</a></li>
+            <li role="presentation"><a href="/about">About</a></li>
+            <li role="presentation"><a href="http://flask.pocoo.org" target="_blank">More About Flask</a></li>
+          </ul>
+        </nav>
+      </div>
+      {% block body %}
+      {% endblock %}
+      <footer class="footer">
+        <p>© 2016 Your Name Here</p>
+      </footer>
+    </div> <!-- /container -->
+    
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#formGitRepo').on('submit', function(event){
+          event.preventDefault();
+          var gitUsername = $('#git-username').val();
+          $.ajax({
+                  type : "POST",
+                  url : "/search",
+                  data: {username: $('#git-username').val()}
+                })
+                .done(function(data){
+                  console.log(JSON.parse(data));
+                  var data = JSON.parse(data);
+                  var len = data.length;
+                  $('#userName').text(data[0].owner.login);
+                  var txt = "";
+                  if(len > 0){
+                    for(var i = 0; i < len; i++){
+                        if(data[i].name && data[i].full_name){
+                            txt += "<tbody><tr><td>" 
+                                + data[i].name + "</td><td>" 
+                                + data[i].language + "</td><td>" 
+                                + data[i].git_url + "</td><td>" 
+                                + data[i].watchers_count 
+                                +"</td></tr><tbody>";
+                        }
+                    }
+                    if(txt != ""){
+                        $("#table").append(txt).removeClass("hidden");
+                    }
+                  }
+                })
+        })
+      });
+    </script>
+  </body>
+</html>
